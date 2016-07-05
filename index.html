@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Kewl log viewer</title>
+    <!--<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">-->
+      <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->
+  </head>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="logCtrl.js"></script>
+  <body>
+
+  <div ng-app="kewl" ng-controller="logCtrl">
+    <table>
+        <tr ng-repeat="log in logs">
+            <td>{{ log._id }}</td>
+            <!--<td>{{ log._type }}</td>-->
+        </tr>
+    </table>
+
+    <!-- All of the Node.js APIs are available in this renderer process. -->
+    <!--We are using node <script>document.write(process.versions.node)</script>,-->
+    <!--Chromium <script>document.write(process.versions.chrome)</script>,-->
+    <!--and Electron <script>document.write(process.versions.electron)</script>.-->
+
+  </div>
+
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>-->
+    <!--<script src="js/bootstrap.min.js"></script>-->
+    <!--<script src="http://code.jquery.com/jquery.js"></script>-->
+  </body>
+
+  <script>
+    require('./renderer.js')
+  </script>
+</html>
