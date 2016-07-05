@@ -7,9 +7,9 @@ app.controller('logCtrl', function ($scope, $http) {
     //$scope.logs = data.hits.hits;
     //$scope.logs = [{"_index": "logstash-2016.07.05", "_type": "syslog", "_id": "AVW6rL-0q5bl6XxRKp_b", "_score": 1.0}];
 
-    //http://10.73.66.63:9200/_all/_search?query:user=anonymous&size=1
+    //http://10.73.66.63:9200/_all/_search?query:user=anonymous&size=100
 
-    $http.get('http://10.73.66.63:9200/_all/_search?query:user=anonymous&size=2')
+    $http.get('http://10.73.66.63:9200/_all/_search?query:user=anonymous&size=15')
         .then(function(response) {
             console.log(response.data);
             $scope.logs = response.data.hits.hits;
