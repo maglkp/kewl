@@ -1,49 +1,54 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="UTF-8">
     <title>Kewl log viewer</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <script type="text/javascript" src="js/jquery-3.0.0.min.js"></script>
-  </head>
+    <link href="css/style.css" rel="stylesheet">
+</head>
 
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-  <script src="logCtrl.js"></script>
-  <body>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="logCtrl.js"></script>
+<body>
 
-  <div ng-app="kewl" ng-controller="logCtrl">
+<div ng-app="kewl" ng-controller="logCtrl">
     <table class="table table-bordered table-striped">
 
         <thead>
-            <tr>
-                <th>Date</th>
-                <th>App Name</th>
-                <th>Level</th>
-                <th>User</th>
-                <th>Message</th>
-            </tr>
-            <tr>
-                <th><input type="date" ng-model="selectedDate" ng-change="updateLogs()"></th>
-                <th><select ng-model="selectedAppName" ng-options="x for x in appNames" ng-change="updateLogs()"></select></th>
-                <th><select ng-model="selectedLevel" ng-options="x for x in levels" ng-change="updateLogs()"></select></th>
-                <th></th>
-                <th></th>
-            </tr>
+        <tr>
+            <th>Date</th>
+            <th>App Name</th>
+            <th>Level</th>
+            <th>Message</th>
+        </tr>
+        <tr>
+            <th><input type="date" ng-model="selectedDate" ng-change="updateLogs()"></th>
+            <th><select ng-model="selectedAppName" ng-options="x for x in appNames" ng-change="updateLogs()"></select>
+            </th>
+            <th><select ng-model="selectedLevel" ng-options="x for x in levels" ng-change="updateLogs()"></select></th>
+            <th></th>
+            <th></th>
+        </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="log in logs">
-                <td>{{ log._source.timestamp }}</td>
-                <td>{{ log._source.appName }}</td>
-                <td>{{ log._source.level }}</td>
-                <td>{{ log._source.user }}</td>
-                <td>{{ log._source.message }}</td>
-            </tr>
+        <tr ng-repeat="log in logs">
+            <td>{{ log._source['@timestamp'] }}</td>
+            <td>{{ log._source.appName }}</td>
+            <td>{{ log._source.level }}</td>
+            <td>{{ log._source.message }}</td>
+        </tr>
         </tbody>
     </table>
-  </div>
-  </body>
+    <span class="totalLabel label label-default"> Total: {{ total }}</span>
+    <div class="btn-group pagingLinks" role="group" aria-label="...">
+        <button type="button" class="btn btn-default">1</button>
+        <button type="button" class="btn btn-default">2</button>
+        <button type="button" class="btn btn-default">3</button>
+    </div>
+</div>
+</body>
 
-  <script>
+<script>
     require('./renderer.js')
-  </script>
+</script>
 </html>

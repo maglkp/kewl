@@ -1,0 +1,9 @@
+.pagingLinks {
+    margin: 5px;
+}
+
+.totalLabel {
+    margin: 5px;
+    font-size: 120%;
+    font-weight: 600;
+}

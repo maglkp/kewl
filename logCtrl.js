@@ -5,13 +5,16 @@ var app = angular.module('kewl', []);
 app.controller('logCtrl', function ($scope, $http) {
 
     $scope.appNames = ["", "dev-prom-gateway", "dev-titan-notification-management",
-                       "dev-prom-entity-definition", "dev-vnx-asset-management"];
+                       "dev-prom-entity-definition", "dev-vnx-asset-management", "dev-oberon-asset-management"];
     $scope.levels = ["", "INFO", "DEBUG", "WARN", "ERROR", "FATAL"];
     $scope.selectedAppName = "";
     $scope.selectedLevel = "";
     $scope.selectedDate = null;
+    $scope.pageSize = 10;
+    $scope.currentPage = 0;
+    $scope.total = 0;
 
-    var elasticSearchBaseUrl = 'http://10.73.66.63:9200/';
+    var elasticSearchBaseUrl = 'http://:9200/';
     var searchAll = '_all/';
 
     function updateLogs() {
@@ -37,19 +40,33 @@ app.controller('logCtrl', function ($scope, $http) {
         }
 
         if (params) {
-            url += "?q=" + "%2B" + params + "%2B" + "&size=200";
+            url += "?q=" + params + "&size=" + $scope.pageSize;
         } else {
-            url += "?size=200";
+            url += "?size=" + $scope.pageSize;
         }
+
+        url += '&from=' + $scope.currentPage;
+        url += '&sort%3D%40timestamp%3Aasc';
+        //url += '&sort%3Dlevel%3Adesc';
 
         console.log(url);
         $http.get(url)
             .then(function (response) {
-                $scope.logs = response.data.hits.hits;
+                let hits = response.data.hits.hits;
+                $scope.total = response.data.hits.total;
+                $scope.logs = hits;
             },
             function (response) {
                 $scope.logs = [];
             });
+    }
+
+    function sortByTimestampDsc(a, b) {
+        if(!b || !b._source || !b._source['@timestamp'])
+            return -1;
+        if(!a || !a._source || !a._source['@timestamp'])
+            return 1;
+        return new Date(b._source['@timestamp']) - new Date(a._source['@timestamp']);
     }
 
     updateLogs();
