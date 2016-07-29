@@ -11,7 +11,7 @@ app.controller('logCtrl', function ($scope, $http) {
     $scope.selectedLevel = "";
     $scope.selectedDate = null;
 
-    var elasticSearchBaseUrl = 'http://10.73.66.63:9200/';
+    var elasticSearchBaseUrl = 'http://<IP>:9200/';
     var searchAll = '_all/';
 
     function updateLogs() {
@@ -37,7 +37,7 @@ app.controller('logCtrl', function ($scope, $http) {
         }
 
         if (params) {
-            url += "?q=" + "%2B" + params + "%2B" + "&size=200";
+            url += "?q=" + params + "&size=200";
         } else {
             url += "?size=200";
         }
